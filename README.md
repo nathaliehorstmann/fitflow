@@ -50,4 +50,8 @@ fitflow/
 ├── backend/            # Express REST API & Server-Logik
 ├── frontend/           # HTML/CSS/JS Client
 └── database/           # SQL-Dump (schema.sql)
+
+## 📄 Dokumentation
+
+- [Agiles Projektmanagement (PDF)](docs/FitFlow_Abschlussprojekt.pdf) – Detaillierte Übersicht zu Stakeholderanalyse, User Personas und MoSCoW-Backlog.
 ```
