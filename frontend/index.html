@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitFlow – Dein Trainingsplaner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="phone-mock bg-fit-black overflow-hidden flex flex-col relative">
+        
+        <!-- SCREEN 1: Login / Registrierung (US-01).
+             Ein einziges Formular dient für beide Modi; toggleLoginMode()
+             in app.js schaltet Titel, Button-Text und Link um. -->
+        <div id="screen-login" class="flex-1 flex flex-col justify-between p-6">
+            <div class="flex justify-between items-center bg-fit-teal -mx-6 -mt-6 px-6 py-4 rounded-b-lg">
+                <span class="font-bold text-white text-lg">FitFlow</span>
+                <span class="text-xs text-white/80">Dein Trainingsplaner</span>
+            </div>
+            <div class="my-auto space-y-6">
+                <div class="text-center space-y-2">
+                    <span class="text-xs bg-[#e6f7f4] text-fit-teal px-3 py-1 rounded-full font-medium">US-01 · Registrierung & Login</span>
+                    <!-- Die Überschriften bekommen IDs, damit wir sie per JS ändern können -->
+                    <h2 id="login-title" class="text-3xl font-extrabold text-fit-teal mt-4">FitFlow</h2>
+                    <p id="login-subtitle" class="text-gray-400 text-sm">Meld dich an und starte durch</p>
+                </div>
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">E-Mail</label>
+                        <input type="email" id="login-email" placeholder="z.B. lena@example.com" class="w-full bg-fit-chip border border-[#444] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-fit-teal transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Passwort</label>
+                        <div class="relative">
+                            <input type="password" id="login-password" value="passwort123" class="w-full bg-fit-chip border border-[#444] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-fit-teal transition pr-10" required>
+                            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition">
+                                <i id="password-toggle-icon" class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="login-error" class="text-red-400 text-xs text-center hidden">Falsche Anmeldedaten!</div>
+                    
+                    <!-- Der Button-Text bekommt ein Span-Element für dynamischen Text -->
+                    <button type="submit" class="w-full py-3 bg-fit-chip border border-[#444] rounded-xl font-semibold hover:border-fit-teal text-white flex items-center justify-center gap-2 transition">
+                        <span id="login-btn-text">Anmelden</span> <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </button>
+
+                    <!-- NEU: Link zum Wechseln zwischen Login und Registrierung -->
+                    <div class="text-center pt-2">
+                        <button type="button" onclick="toggleLoginMode()" id="login-toggle-link" class="text-xs text-fit-teal hover:underline bg-transparent border-0 cursor-pointer">
+                            Noch kein Konto? Jetzt registrieren
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center text-[10px] text-gray-500">Passwörter werden verschlüsselt gespeichert (DSGVO)</div>
+        </div>
+
+        <!-- SCREEN 2: Wochenplan-Übersicht im Lesemodus (US-02).
+             Die 7 Tages-Container (#display-Mo bis #display-So) werden
+             von renderWochenplanDisplay() in app.js dynamisch befüllt. -->
+        <div id="screen-plan" class="flex-1 flex flex-col justify-between hidden">
+            <div class="flex justify-between items-center bg-fit-teal px-6 py-4 shrink-0">
+                <span id="plan-title-display" class="font-bold text-white text-lg">Mein Wochenplan</span>
+                <div class="flex items-center gap-3">
+                    <span class="text-xs text-white/80">KW 25 · <span id="username-display">Nutzer</span></span>
+                    <button onclick="logout()" title="Abmelden" class="text-white/80 hover:text-white transition">
+                        <i class="fa-solid fa-right-from-bracket text-sm"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-5 space-y-4 flex flex-col min-h-0">
+                <div class="text-center"><span class="text-xs bg-[#e6f7f4] text-fit-teal px-3 py-1 rounded-full font-medium">US-02 · Plan erstellen & verwalten</span></div>
+                
+                <div class="flex justify-between gap-1.5 pt-1">
+                    <button onclick="createNewPlanPrototype()" class="flex-1 py-2 bg-fit-chip border border-[#333] hover:border-fit-teal rounded-lg text-[10px] font-medium text-gray-300 transition flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-plus text-fit-teal"></i> Neuer Plan
+                    </button>
+                    <button onclick="renamePlanPrototype()" class="flex-1 py-2 bg-fit-chip border border-[#333] hover:border-fit-teal rounded-lg text-[10px] font-medium text-gray-300 transition flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-pen text-fit-teal"></i> Umbenennen
+                    </button>
+                    <button onclick="clearPlanPrototype()" class="flex-1 py-2 bg-[#2a1b1b] border border-[#422] hover:border-red-500 rounded-lg text-[10px] font-medium text-red-400 transition flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-trash-can"></i> Löschen
+                    </button>
+                </div>
+
+                <div class="space-y-3 mt-2 flex-1">
+                    <div class="flex items-center justify-between border-b border-[#2d2d2d] pb-2"><span class="text-sm font-semibold w-8 text-gray-400">Mo</span><div class="flex flex-wrap gap-2 justify-end flex-1" id="display-Mo"></div></div>
+                    <div class="flex items-center justify-between border-b border-[#2d2d2d] pb-2"><span class="text-sm font-semibold w-8 text-gray-400">Di</span><div class="flex flex-wrap gap-2 justify-end flex-1" id="display-Di"></div></div>
+                    <div class="flex items-center justify-between border-b border-[#2d2d2d] pb-2"><span class="text-sm font-semibold w-8 text-gray-400">Mi</span><div class="flex flex-wrap gap-2 justify-end flex-1" id="display-Mi"></div></div>
+                    <div class="flex items-center justify-between border-b border-[#2d2d2d] pb-2"><span class="text-sm font-semibold w-8 text-gray-400">Do</span><div class="flex flex-wrap gap-2 justify-end flex-1" id="display-Do"></div></div>
+                    <div class="flex items-center justify-between border-b border-[#2d2d2d] pb-2"><span class="text-sm font-semibold w-8 text-gray-400">Fr</span><div class="flex flex-wrap gap-2 justify-end flex-1" id="display-Fr"></div></div>
+                    <div class="flex items-center justify-between border-b border-[#2d2d2d] pb-2"><span class="text-sm font-semibold w-8 text-gray-400">Sa</span><div class="flex flex-wrap gap-2 justify-end flex-1" id="display-Sa"></div></div>
+                    <div class="flex items-center justify-between border-b border-[#2d2d2d] pb-2"><span class="text-sm font-semibold w-8 text-gray-400">So</span><div class="flex flex-wrap gap-2 justify-end flex-1" id="display-So"></div></div>
+                </div>
+                <button onclick="startEditMode()" class="w-full mt-4 py-3 bg-fit-chip border border-[#444] rounded-xl font-semibold hover:border-fit-teal text-white flex items-center justify-center gap-2 transition">
+                    Übungen verschieben <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: Drag & Drop Bearbeitungsmodus (US-03).
+             Wird über den Button "Übungen verschieben" auf screen-plan
+             geöffnet (siehe startEditMode() in app.js). Enthält die
+             7 Wochentage als Drop-Zonen sowie den Übungs-Pool unten,
+             aus dem neue Übungen hineingezogen werden können. -->
+        <div id="screen-edit" class="flex-1 flex flex-col hidden h-full max-h-[600px]">
+            <div class="flex justify-between items-center bg-fit-teal px-6 py-4 shrink-0">
+                <span class="font-bold text-white text-lg">Plan bearbeiten</span>
+                <span class="text-xs text-white/80">Drag & Drop aktiv</span>
+            </div>
+            
+            <div class="flex-1 flex flex-col p-5 space-y-3 min-h-0 overflow-hidden">
+                <div class="text-center shrink-0"><span class="text-xs bg-[#e6f7f4] text-fit-teal px-3 py-1 rounded-full font-medium">US-03 · Drag & Drop</span></div>
+                <p class="text-xs text-gray-400 text-center shrink-0">Ziehe Übungen aus dem Pool unten auf deine Wochentage.</p>
+                
+                <div class="space-y-3 mt-2 overflow-y-auto flex-1 max-h-[220px] pr-1 border-b border-[#222] pb-2">
+                    <div class="space-y-1"><span class="text-xs font-semibold text-gray-400">Mo</span><div id="drag-Mo" class="drag-zone min-h-[44px] bg-[#222] border border-dashed border-[#444] rounded-xl p-1 flex flex-wrap gap-2"></div></div>
+                    <div class="space-y-1"><span class="text-xs font-semibold text-gray-400">Di</span><div id="drag-Di" class="drag-zone min-h-[44px] bg-[#222] border border-dashed border-[#444] rounded-xl p-1 flex flex-wrap gap-2"></div></div>
+                    <div class="space-y-1"><span class="text-xs font-semibold text-gray-400">Mi</span><div id="drag-Mi" class="drag-zone min-h-[44px] bg-[#222] border border-dashed border-[#444] rounded-xl p-1 flex flex-wrap gap-2"></div></div>
+                    <div class="space-y-1"><span class="text-xs font-semibold text-gray-400">Do</span><div id="drag-Do" class="drag-zone min-h-[44px] bg-[#222] border border-dashed border-[#444] rounded-xl p-1 flex flex-wrap gap-2"></div></div>
+                    <div class="space-y-1"><span class="text-xs font-semibold text-gray-400">Fr</span><div id="drag-Fr" class="drag-zone min-h-[44px] bg-[#222] border border-dashed border-[#444] rounded-xl p-1 flex flex-wrap gap-2"></div></div>
+                    <div class="space-y-1"><span class="text-xs font-semibold text-gray-400">Sa</span><div id="drag-Sa" class="drag-zone min-h-[44px] bg-[#222] border border-dashed border-[#444] rounded-xl p-1 flex flex-wrap gap-2"></div></div>
+                    <div class="space-y-1"><span class="text-xs font-semibold text-gray-400">So</span><div id="drag-So" class="drag-zone min-h-[44px] bg-[#222] border border-dashed border-[#444] rounded-xl p-1 flex flex-wrap gap-2"></div></div>
+                </div>
+
+                <div class="pt-1 space-y-1 shrink-0 bg-fit-black">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-fit-teal uppercase tracking-wider block"><i class="fa-solid fa-dumbbell mr-1"></i> Übungs-Pool</span>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-1.5 pb-1">
+                        <button onclick="filterPoolCategory('Alle')" id="pool-filter-Alle" class="pool-filter-btn text-[10px] bg-fit-teal text-white px-2 py-1 rounded-lg transition">Alle</button>
+                        <button onclick="filterPoolCategory('Rückenschonend')" id="pool-filter-Rückenschonend" class="pool-filter-btn text-[10px] bg-fit-chip text-gray-300 px-2 py-1 rounded-lg transition">Rücken</button>
+                        <button onclick="filterPoolCategory('Cardio')" id="pool-filter-Cardio" class="pool-filter-btn text-[10px] bg-fit-chip text-gray-300 px-2 py-1 rounded-lg transition">Cardio</button>
+                        <button onclick="filterPoolCategory('Muskelaufbau')" id="pool-filter-Muskelaufbau" class="pool-filter-btn text-[10px] bg-fit-chip text-gray-300 px-2 py-1 rounded-lg transition">Aufbau</button>
+                    </div>
+
+                    <div id="drag-pool" class="bg-[#181818] border border-dashed border-fit-teal/30 rounded-xl p-2 flex flex-wrap gap-2 h-[80px] overflow-y-auto">
+                    </div>
+                </div>
+                <button onclick="stopEditMode()" class="w-full py-3 bg-fit-chip border border-[#444] rounded-xl font-semibold hover:border-fit-teal text-white flex items-center justify-center gap-2 transition shrink-0 mt-auto">
+                    ← Zurück zum Plan
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN 4: Übungsbibliothek mit Kategoriefilter (US-04).
+             #exercise-list wird von renderExerciseLibrary() in app.js
+             befüllt; mehrere Filter sind gleichzeitig kombinierbar. -->
+        <div id="screen-exercises" class="flex-1 flex flex-col justify-between hidden">
+            <div class="flex justify-between items-center bg-fit-teal px-6 py-4">
+                <span class="font-bold text-white text-lg">Übungsbibliothek</span>
+                <span class="text-xs text-white/80">Kategorie filtern</span>
+            </div>
+            <div class="flex-1 overflow-y-auto p-5 space-y-4 flex flex-col">
+                <div class="text-center mb-2"><span class="text-xs bg-[#e6f7f4] text-fit-teal px-3 py-1 rounded-full font-medium">US-04 · Kategoriefilter</span></div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterCategory('Alle')" id="filter-btn-Alle" class="filter-btn text-xs bg-fit-teal text-white font-medium px-4 py-2 rounded-xl transition">Alle</button>
+                    <button onclick="filterCategory('Rückenschonend')" id="filter-btn-Rückenschonend" class="filter-btn text-xs bg-fit-chip text-gray-300 font-medium px-4 py-2 rounded-xl transition">Rückenschonend</button>
+                    <button onclick="filterCategory('Cardio')" id="filter-btn-Cardio" class="filter-btn text-xs bg-fit-chip text-gray-300 font-medium px-4 py-2 rounded-xl transition">Cardio</button>
+                    <button onclick="filterCategory('Muskelaufbau')" id="filter-btn-Muskelaufbau" class="filter-btn text-xs bg-fit-chip text-gray-300 font-medium px-4 py-2 rounded-xl transition">Muskelaufbau</button>
+                </div>
+                <div id="exercise-list" class="space-y-3 flex-1 overflow-y-auto mt-2"></div>
+                <div class="text-center text-xs text-gray-500 py-2" id="exercise-count">0 Übungen gefunden</div>
+            </div>
+        </div>
+
+        <div id="bottom-navbar" class="h-16 bg-fit-dark border-t border-[#333] flex justify-around items-center px-4 hidden">
+            <button onclick="switchTab('plan')" id="nav-plan" class="flex flex-col items-center gap-1 text-fit-teal transition">
+                <i class="fa-solid fa-calendar-days text-lg"></i><span class="text-[10px]">Plan</span>
+            </button>
+            <button onclick="switchTab('exercises')" id="nav-exercises" class="flex flex-col items-center gap-1 text-gray-500 transition hover:text-fit-teal">
+                <i class="fa-solid fa-magnifying-glass text-lg"></i><span class="text-[10px]">Übungen</span>
+            </button>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

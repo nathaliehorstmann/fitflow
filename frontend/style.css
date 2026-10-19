@@ -1,0 +1,29 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #121212;          /* Dunkeles App-Theme */
+    color: #e0e0e0;
+}
+
+/* Wiederverwendbare Farb-Utility-Klassen passend zur FitFlow-Farbe */
+.bg-fit-dark { background-color: #262626; }   /* Navbar-Hintergrund */
+.bg-fit-black { background-color: #1c1c1c; }   /* Haupt-App-Hintergrund (Phone-Mock) */
+.text-fit-teal { color: #00b082; }
+.bg-fit-teal { background-color: #00b082; }    /* Header-Leisten der Screens */
+.border-fit-teal { border-color: #00b082; }
+.bg-fit-chip { background-color: #333333; }    /* Eingabefelder & Übungs-Chips */
+
+
+/* Simuliert ein Smartphone-Gehäuse um die App herum (MVP-Prototyp-Darstellung) */
+.phone-mock {
+    width: 390px;
+    height: 780px;
+    border: 8px solid #2d2d2d;
+    border-radius: 36px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Zwingt den Übungs-Bildschirm, innerhalb des Phone-Mocks zu bleiben, damit das Scrollen anspringt */
+#screen-exercises {
+    max-height: calc(780px - 64px); /* Handyhölle minus Höhe der Bottom-Navbar (16 * 4px) */
+    overflow: hidden;
+}
