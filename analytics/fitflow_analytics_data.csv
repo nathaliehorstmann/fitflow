@@ -1,0 +1,27 @@
+plan_id,user_id,email,wochentag,exercise_name,exercise_subtype,exercise_category
+473,2,jonas@example.com,Mo,Kniebeugen,Beine & Gesäß (Grundübung),Muskelaufbau
+474,2,jonas@example.com,Mo,Klimmzüge,Oberer Rücken & Bizeps (Eigengewicht),Muskelaufbau
+475,2,jonas@example.com,Di,Laufband / Joggen,Klassisches Herz-Kreislauf-Training,Cardio
+476,2,jonas@example.com,Mi,Bankdrücken,Brust & Trizeps (Langhantel),Muskelaufbau
+477,2,jonas@example.com,Mi,Plank / Unterarmstütz,Core-Stabilität & Rumpfmuskulatur,Rückenschonend
+478,2,jonas@example.com,Fr,Superman,Stärkung des unteren Rückenstreckers,Rückenschonend
+479,2,jonas@example.com,Fr,Kreuzheben,Ganzkörper & Kraft (Unterer Rücken),Muskelaufbau
+305,3,marco@example.com,Mo,Klimmzüge,Oberer Rücken & Bizeps (Eigengewicht),Muskelaufbau
+306,3,marco@example.com,Mo,Schulterdrücken,Isolationsübung für die Arme,Muskelaufbau
+307,3,marco@example.com,Mi,Kreuzheben,Ganzkörper & Kraft (Unterer Rücken),Muskelaufbau
+308,3,marco@example.com,Mi,Bankdrücken,Brust & Trizeps (Langhantel),Muskelaufbau
+309,3,marco@example.com,Fr,Kniebeugen,Beine & Gesäß (Grundübung),Muskelaufbau
+310,3,marco@example.com,Fr,Plank / Unterarmstütz,Core-Stabilität & Rumpfmuskulatur,Rückenschonend
+311,3,marco@example.com,Sa,Fahrrad-Ergometer,Fokus auf Ausdauer & Beindurchblutung,Cardio
+318,4,sara@example.com,Mi,Katze-Kuh Dehnung,Sanfte Mobilisation der Wirbelsäule,Rückenschonend
+319,4,sara@example.com,Mi,Plank / Unterarmstütz,Core-Stabilität & Rumpfmuskulatur,Rückenschonend
+320,4,sara@example.com,Fr,Glute Bridges,Gezieltes Beckenheben für Gesäß & Rücken,Rückenschonend
+321,4,sara@example.com,Fr,Bird Dog,Rücken- & Rumpfbalance im Vierfüßlerstand,Rückenschonend
+675,1,test@fitflow.de,Mo,Yoga Sonnengruß,Ablauf für Flexibilität & Atmung,Muskelaufbau
+676,1,test@fitflow.de,Mi,Yoga Sonnengruß,Ablauf für Flexibilität & Atmung,Muskelaufbau
+677,1,test@fitflow.de,Fr,Yoga Sonnengruß,Ablauf für Flexibilität & Atmung,Muskelaufbau
+678,1,test@fitflow.de,MO,Bankdrücken,Brust & Trizeps (Langhantel),Muskelaufbau
+679,1,test@fitflow.de,DI,Kniebeugen,Beine & Gesäß (Grundübung),Muskelaufbau
+680,1,test@fitflow.de,MI,Kreuzheben,Ganzkörper & Kraft (Unterer Rücken),Muskelaufbau
+681,1,test@fitflow.de,FR,Klimmzüge,Oberer Rücken & Bizeps (Eigengewicht),Muskelaufbau
+682,1,test@fitflow.de,SA,Schulterdrücken,Isolationsübung für die Arme,Muskelaufbau
