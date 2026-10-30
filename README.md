@@ -80,6 +80,8 @@ Datenquelle: MariaDB (Tabellen users, exercises, wochenplan)
 Export: SQL-Abfrage (export_analytics.sql), manuell als CSV exportiert
 Visualisierung: Power BI Dashboard mit drei Visuals
 
+![Power BI Dashboard Overview](analytics/dashboard_overview.png)
+
 Erkenntnisse aus den Beispieldaten (26 Übungen):
 
 Muskelaufbau dominiert mit ca. 65 % der Übungen, Cardio macht nur ca. 8 % aus.
