@@ -2,6 +2,8 @@
 
 FitFlow ist eine Full-Stack-Webanwendung zur Verwaltung und Nachverfolgung von Fitness-Workouts. Das Projekt entstand im Rahmen einer Hochschulleistung im Bereich **Agiles Projektmanagement** und deckt den gesamten Zyklus von der Stakeholder-Analyse über Agile User Stories bis hin zum voll funktionsfähigen MVP ab.
 
+Hinweis zur Entstehung: Die Umsetzung von Frontend und Backend erfolgte mit KI-Unterstützung, da der Schwerpunkt des Moduls auf agilem Projektmanagement lag. Datenbankmodell, SQL-Abfragen und Analytics-Auswertung wurden von mir erarbeitet, teilweise mit KI-Hilfe.
+
 ---
 
 ## 🚀 Features & Stack
@@ -71,15 +73,15 @@ fitflow/
 
 ## 📊 Power BI Analytics Dashboard
 
-Zur Analyse der Trainingsdaten wurde eine Analytics-Pipeline aufgebaut:
-- **Datenquelle:** MariaDB (`users`, `exercises`, `wochenplan`)
-- **Export:** SQL-Extraktion exportiert nach `analytics/fitflow_analytics_data.csv`
-- **Visualisierung:** Interaktives Power BI Dashboard
+Zur Auswertung der Trainingsdaten wurde ein Analytics-Workflow aufgebaut:
+MariaDB → SQL-Abfrage → CSV-Export → Power BI
 
-![Power BI Dashboard Overview](analytics/dashboard_overview.png)
+Datenquelle: MariaDB (Tabellen users, exercises, wochenplan)
+Export: SQL-Abfrage (export_analytics.sql), manuell als CSV exportiert
+Visualisierung: Power BI Dashboard mit drei Visuals
 
-### Key Insights & Metrics
-- **Gesamtanzahl Übungen:** KPI-Erfassung über alle aktiven Wochenpläne.
-- **Kategorie-Fokus:** Gegenüberstellung von Muskelaufbau, Cardio und rückenschonenden Übungen.
-- **Wochenverteilung:** Analyse der Übungsdichte pro Wochentag.
+Erkenntnisse aus den Beispieldaten (26 Übungen):
+
+Muskelaufbau dominiert mit ca. 65 % der Übungen, Cardio macht nur ca. 8 % aus.
+Die meisten Übungen liegen auf Mittwoch und Freitag (zusammen ca. 62 %); Donnerstag und Sonntag sind leer.
 ```
